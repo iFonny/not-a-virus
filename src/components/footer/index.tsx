@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
                 <a
                     href="https://github.com/pankod"
                     target="_blank"
-                    data-testid="pankod-logo"
+                    data-testid="pankod-logo" rel="noreferrer"
                 >
                     <PankodIcon color="white" width="140" height="28" />
                 </a>
@@ -30,28 +30,28 @@ export const Footer: React.FC = () => {
                     <a
                         href="https://github.com/pankod"
                         target="_blank"
-                        style={iconStyle}
+                        style={iconStyle} rel="noreferrer"
                     >
                         <GithubIcon color="white" width="28" height="29" />
                     </a>
                     <a
                         href="https://twitter.com/PankodDev"
                         target="_blank"
-                        style={iconStyle}
+                        style={iconStyle} rel="noreferrer"
                     >
                         <TwitterIcon color="white" width="28" height="28" />
                     </a>
                     <a
                         href="https://www.youtube.com/channel/UCBGOeQkv1XW3ptryLWlQbAQ"
                         target="_blank"
-                        style={iconStyle}
+                        style={iconStyle} rel="noreferrer"
                     >
                         <YoutubeIcon color="white" width="28" height="29" />
                     </a>
                     <a
                         href="https://www.linkedin.com/company/pankod-yazilim-ve-danismanlik/"
                         target="_blank"
-                        style={iconStyle}
+                        style={iconStyle} rel="noreferrer"
                     >
                         <LinkedinIcon color="white" width="28" height="32" />
                     </a>

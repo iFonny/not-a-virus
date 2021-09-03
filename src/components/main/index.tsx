@@ -12,7 +12,7 @@ export const Main: React.FC = () => {
                 The frontend boilerplate with superpowers!
             </p>
             <Button colorScheme="blue" variant="solid" size="md">
-                <a href="https://pankod.github.io/superplate/" target="_blank">
+                <a href="https://pankod.github.io/superplate/" target="_blank" rel="noreferrer">
                     Docs
                 </a>
             </Button>
