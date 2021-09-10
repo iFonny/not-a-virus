@@ -10,9 +10,12 @@ import store from '@redux/store';
 import { appWithTranslation } from '@i18n';
 import { SessionProvider } from 'next-auth/react';
 import { NextPage } from 'next';
+import PrivateLayout from 'src/layouts/AuthLayout';
+import Layout from 'src/layouts/Layout';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
+  auth?: boolean;
 };
 
 type AppPropsWithLayout = AppProps & {
@@ -30,7 +33,13 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
       <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>
+            <Provider store={store}>
+              {Component.auth ? (
+                <PrivateLayout>{getLayout(<Component {...pageProps} />)}</PrivateLayout>
+              ) : (
+                <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
+              )}
+            </Provider>
           </Hydrate>
         </QueryClientProvider>
       </ChakraProvider>

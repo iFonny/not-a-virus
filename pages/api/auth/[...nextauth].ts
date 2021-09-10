@@ -34,12 +34,13 @@ export default NextAuth({
 
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token, user }) {
+      console.log('user', user);
       console.log('token', token);
       console.log('session', session);
-      if (token?.id) session.user.id = token.id;
-      if (token?.role) session.user.role = token.role;
-      if (token?.apiKey) session.user.apiKey = token.apiKey;
+      if (user?.id) session.user.id = user.id;
+      if (user?.role) session.user.role = user.role;
+      if (user?.apiKey) session.user.apiKey = user.apiKey;
 
       return session;
     },

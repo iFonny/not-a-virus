@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 
 import { Header, Main, Cards, Footer } from '@components';
 import api from 'src/utils/api';
+import Link from 'next/link';
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -25,9 +26,22 @@ const Home = () => {
           <>
             Not signed in <br />
             <button onClick={() => signIn()}>Sign in</button>
+            <Link href="/coucou" passHref>
+              <button>COUCOU</button>
+            </Link>
+            <Link href="/openpage" passHref>
+              <button>OPEN PAGE</button>
+            </Link>
           </>
         )}
       </>
+
+      <Link href="/coucou" passHref>
+        <button>COUCOU</button>
+      </Link>
+      <Link href="/openpage" passHref>
+        <button>OPEN PAGE</button>
+      </Link>
       <Main />
       <Cards />
       <Spacer />
