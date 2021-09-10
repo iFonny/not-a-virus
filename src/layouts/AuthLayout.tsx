@@ -2,16 +2,16 @@ import React, { Suspense } from 'react';
 import { Spacer, Flex } from '@chakra-ui/react';
 
 import { Header, Main, Cards, Footer } from '@components';
-import { useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/react';
 import FullPageSpinner from 'src/ui-components/FullPageSpinner';
 import Layout, { LayoutProps } from './Layout';
 
 const PrivateLayout = (props: LayoutProps) => {
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
 
-  if (loading) return <FullPageSpinner />;
+  if (status === 'loading') return <FullPageSpinner />;
 
-  if (!loading && !session) return <p>Access Denied</p>;
+  if (status === 'unauthenticated' || !session) return <p>Access Denied</p>;
 
   return (
     <>

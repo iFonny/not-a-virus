@@ -3,6 +3,8 @@ import Providers from 'next-auth/providers';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient, RoleEnum } from '@prisma/client';
 
+import DiscordProvider from 'next-auth/providers/discord';
+
 const prisma = new PrismaClient();
 
 // For more information on each option (and a full list of options) go to
@@ -10,7 +12,7 @@ const prisma = new PrismaClient();
 export default NextAuth({
   // https://next-auth.js.org/configuration/providers
   providers: [
-    Providers.Discord({
+    DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
     }),
@@ -24,7 +26,7 @@ export default NextAuth({
   secret: process.env.SECRET,
 
   callbacks: {
-    async jwt(token, user, account) {
+    async jwt({ token, user, account }) {
       console.log('je viens ici ?', user);
       if (user?.id) token.id = user.id;
       if (user?.role) token.role = user.role;
@@ -32,7 +34,7 @@ export default NextAuth({
 
       return token;
     },
-    async session(session, token) {
+    async session({ session, token }) {
       console.log('token', token);
       console.log('session', session);
       if (token?.id) session.user.id = token.id;

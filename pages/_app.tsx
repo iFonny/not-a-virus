@@ -8,7 +8,7 @@ import { Hydrate } from 'react-query/hydration';
 import { Provider } from 'react-redux';
 import store from '@redux/store';
 import { appWithTranslation } from '@i18n';
-import { Provider as AuthProvider } from 'next-auth/client';
+import { SessionProvider } from 'next-auth/react';
 import { NextPage } from 'next';
 
 type NextPageWithLayout = NextPage & {
@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
-    <AuthProvider session={pageProps.session}>
+    <SessionProvider session={pageProps.session}>
       <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
           </Hydrate>
         </QueryClientProvider>
       </ChakraProvider>
-    </AuthProvider>
+    </SessionProvider>
   );
 }
 
