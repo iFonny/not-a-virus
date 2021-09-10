@@ -1,32 +1,26 @@
-import React, { useEffect } from 'react';
-import { Spacer, Flex } from '@chakra-ui/react';
+import React, { useEffect, ReactNode } from 'react';
 
-import { Header, Main, Cards, Footer } from '@components';
-import { signIn, useSession } from 'next-auth/react';
-import FullPageSpinner from 'src/ui-components/FullPageSpinner';
-import Layout, { LayoutProps } from './Layout';
+import { useSession } from 'next-auth/react';
+import FullPageSpinner from 'src/components-ui /full-page-spinner';
+import { LayoutProps } from './Layout';
+import { useRouter } from 'next/router';
+
+export type Props = {
+  children: ReactNode;
+};
 
 /* NextAuth.js auth component from doc */
-const PrivateLayout = (props: LayoutProps) => {
+const Auth = ({ children }: Props) => {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   const isUser = !!session?.user;
   useEffect(() => {
     if (status === 'loading') return; // Do nothing while loading
-    if (!isUser) signIn(); // If not authenticated, force log in
-  }, [isUser, status]);
+    if (!isUser) router.push('/auth/signin'); // signIn(); // If not authenticated, force log in
+  }, [isUser, router, status]);
 
-  if (isUser)
-    return (
-      <>
-        <h1>Protected Page private layout</h1>
-        <p>You can view this page because you are signed in.</p>
-
-        <div>{JSON.stringify({ session })}</div>
-
-        <Layout {...props} />
-      </>
-    );
+  if (isUser) return <>{children}</>;
 
   // Session is being fetched, or no user.
   // If no user, useEffect() will redirect.
@@ -62,4 +56,4 @@ const AuthLayout = (props: LayoutProps) => (
 );
  */
 
-export default PrivateLayout;
+export default Auth;

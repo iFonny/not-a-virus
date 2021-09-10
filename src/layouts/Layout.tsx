@@ -1,3 +1,4 @@
+import NavBar from '@components/navbar';
 import Head from 'next/head';
 import { ReactNode } from 'react';
 
@@ -14,7 +15,7 @@ const Layout = ({ title, children }: LayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>navbar</div>
+      <NavBar />
 
       {children}
     </>

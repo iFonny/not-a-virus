@@ -4,7 +4,7 @@ import React from 'react';
 
 const FullPageSpinner = () => {
   return (
-    <Flex h="100vh" w="100wv" justify="center" align="center">
+    <Flex h="fullvh" w="100wv" justify="center" align="center">
       <Spinner size="xl" />
     </Flex>
   );

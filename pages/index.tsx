@@ -1,18 +1,38 @@
-import React from "react";
-import { Spacer, Flex } from "@chakra-ui/react";
+import React from 'react';
+import { Spinner, Stat, StatGroup, StatLabel, StatNumber, Box } from '@chakra-ui/react';
 
-import { Header, Main, Cards, Footer } from "@components";
+import { getSession, useSession } from 'next-auth/react';
 
-const Home: React.FC = () => {
+const UserInfo = () => {
+  const { data: session, status } = useSession();
+
+  if (status === 'loading') return <Spinner />;
+
+  if (session?.user)
     return (
-        <Flex direction="column" minH="100vh">
-            <Header />
-            <Main />
-            <Cards />
-            <Spacer />
-            <Footer />
-        </Flex>
+      <StatGroup>
+        <Stat>
+          <StatLabel>User id</StatLabel>
+          <StatNumber>{session.user.id}</StatNumber>
+        </Stat>
+
+        <Stat>
+          <StatLabel>User role</StatLabel>
+          <StatNumber>{session.user.role}</StatNumber>
+        </Stat>
+      </StatGroup>
     );
 };
+
+const Home = () => {
+  return (
+    <Box padding={20}>
+      <UserInfo />
+    </Box>
+  );
+};
+
+Home.auth = true;
+export const getServerSideProps = async (ctx) => ({ props: { session: await getSession(ctx) } });
 
 export default Home;
