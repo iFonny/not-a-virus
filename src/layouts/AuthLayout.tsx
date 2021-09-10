@@ -7,33 +7,33 @@ import FullPageSpinner from 'src/ui-components/FullPageSpinner';
 import Layout, { LayoutProps } from './Layout';
 
 /* NextAuth.js auth component from doc */
-/* const PrivateLayout = (props: LayoutProps) => {
-    const { data: session, status } = useSession();
-  
-    const isUser = !!session?.user;
-    useEffect(() => {
-      if (status === 'loading') return; // Do nothing while loading
-      if (!isUser) signIn(); // If not authenticated, force log in
-    }, [isUser, status]);
-  
-    if (isUser)
-      return (
-        <>
-          <h1>Protected Page private layout</h1>
-          <p>You can view this page because you are signed in.</p>
-  
-          <div>{JSON.stringify({ session })}</div>
-  
-          <Layout {...props} />
-        </>
-      );
-  
-    // Session is being fetched, or no user.
-    // If no user, useEffect() will redirect.
-    return <FullPageSpinner />;
-  }; */
-
 const PrivateLayout = (props: LayoutProps) => {
+  const { data: session, status } = useSession();
+
+  const isUser = !!session?.user;
+  useEffect(() => {
+    if (status === 'loading') return; // Do nothing while loading
+    if (!isUser) signIn(); // If not authenticated, force log in
+  }, [isUser, status]);
+
+  if (isUser)
+    return (
+      <>
+        <h1>Protected Page private layout</h1>
+        <p>You can view this page because you are signed in.</p>
+
+        <div>{JSON.stringify({ session })}</div>
+
+        <Layout {...props} />
+      </>
+    );
+
+  // Session is being fetched, or no user.
+  // If no user, useEffect() will redirect.
+  return <FullPageSpinner />;
+};
+
+/* const PrivateLayout = (props: LayoutProps) => {
   const { data: session, status } = useSession();
 
   if (status === 'loading') return <FullPageSpinner />;
@@ -50,7 +50,7 @@ const PrivateLayout = (props: LayoutProps) => {
       <Layout {...props} />
     </>
   );
-};
+}; */
 
 /* 
 

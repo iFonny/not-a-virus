@@ -5,11 +5,10 @@ import { Header, Main, Cards, Footer } from '@components';
 import PrivateLayout from 'src/layouts/AuthLayout';
 import { getSession } from 'next-auth/react';
 
-const Coucou = () => {
+const OpenPage = () => {
   return <div>coucou page</div>;
 };
 
-Coucou.auth = true;
-export const getServerSideProps = async (ctx) => ({ props: { session: await getSession(ctx) } });
+OpenPage.auth = false;
 
-export default Coucou;
+export default OpenPage;
