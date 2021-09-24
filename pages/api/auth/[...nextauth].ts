@@ -5,16 +5,14 @@ import { PrismaClient, RoleEnum } from '@prisma/client';
 
 import DiscordProvider from 'next-auth/providers/discord';
 
-/* let prisma: PrismaClient;
+let prisma: PrismaClient;
 
 if (process.env.NODE_ENV === 'production') {
   prisma = new PrismaClient();
 } else {
   if (!(global as any).prisma) (global as any).prisma = new PrismaClient();
   prisma = (global as any).prisma;
-} */
-
-const prisma = new PrismaClient();
+}
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
