@@ -41,7 +41,8 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   { label: 'Home', href: '/' },
-  { label: 'Url Shortener', href: '/urls' },
+  { label: 'Url Shortener', href: '/url-shortener' },
+  { label: 'Urls', href: '/urls' },
   { label: 'Page With Auth', href: '/page-with-auth' },
   { label: 'Page Without Auth', href: '/page-without-auth' },
 ];
