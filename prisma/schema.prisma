@@ -1,0 +1,73 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+enum RoleEnum {
+    GUEST
+    USER
+    ADMIN
+}
+
+// Authentification (using NextAuth.js - https://next-auth.js.org/adapters/prisma)
+// Is also defined in not-a-virus-api back NestJS app
+
+model User {
+    id            String    @id @default(cuid()) // DO NOT DELETE: Important for Auth
+    name          String? // DO NOT DELETE: Important for Auth
+    email         String?   @unique // DO NOT DELETE: Important for Auth
+    emailVerified DateTime? // DO NOT DELETE: Important for Auth
+    image         String? // DO NOT DELETE: Important for Auth
+    role          RoleEnum  @default(GUEST) // DO NOT DELETE: Important for Auth
+    apiKey        String?   @unique // DO NOT DELETE: Important for Auth
+
+    createdAt DateTime @default(now()) // DO NOT DELETE: Important for Auth
+    updatedAt DateTime @default(now()) @updatedAt // DO NOT DELETE: Important for Auth
+
+    accounts Account[] // DO NOT DELETE: Important for Auth
+    sessions Session[] // DO NOT DELETE: Important for Auth
+}
+
+// DO NOT DELETE: Important for Auth
+model Account {
+    id                 String  @id @default(cuid())
+    userId             String
+    type               String
+    provider           String
+    providerAccountId  String
+    refresh_token      String?
+    access_token       String?
+    expires_at         Int?
+    token_type         String?
+    scope              String?
+    id_token           String?
+    session_state      String?
+    oauth_token_secret String?
+    oauth_token        String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+// DO NOT DELETE: Important for Auth
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// DO NOT DELETE: Important for Auth
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}
