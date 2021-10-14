@@ -3,9 +3,7 @@ import Icon from '@chakra-ui/icon';
 import { Box } from '@chakra-ui/layout';
 import { BuiltInProviderType } from 'next-auth/providers';
 import { ClientSafeProvider, getProviders, getSession, LiteralUnion, signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { SiDiscord } from 'react-icons/si';
-import { useEffect } from 'react';
 
 interface Props {
   providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider>;
