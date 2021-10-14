@@ -1,13 +1,12 @@
 import { Button } from '@chakra-ui/button';
-import { Box, GridItem, HStack, SimpleGrid, Stack } from '@chakra-ui/layout';
+import { Box, GridItem, SimpleGrid } from '@chakra-ui/layout';
 import FormCheckbox from '@components/form/checkbox';
 import FormInput from '@components/form/input';
 import FormTextarea from '@components/form/textarea';
-import { Formik, Form, Field, ErrorMessage, useField, FieldHookConfig } from 'formik';
-import { useMutation } from 'react-query';
-import api from 'src/utils/api';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { isEmpty } from 'lodash';
+import { CreateUrlDTO } from 'api/urls';
 
 const validationSchema = Yup.object({
   longUrl: Yup.string().url('Invalid URL').required('Required'),
@@ -16,27 +15,6 @@ const validationSchema = Yup.object({
   description: Yup.string().max(500, 'Must be 500 characters or less').optional(),
   shouldReturnExisting: Yup.boolean().required('Required'),
 });
-
-// TODO: Mettre dans un .d.ts ou exporter au meme endroit que le call api?
-
-export interface Url {
-  id: number;
-  name: string;
-  description: string | null;
-  longUrl: string;
-  shortUrl: string;
-  urlCode: string | null;
-  clickCount: number;
-  updatedAt: string;
-  createdAt: string;
-}
-export interface CreateUrlDTO {
-  longUrl: string;
-  name: string;
-  customUrlCode?: string;
-  description?: string;
-  shouldReturnExisting?: boolean;
-}
 
 interface Props {
   initialValues?: Partial<CreateUrlDTO>;
@@ -71,7 +49,7 @@ export function UrlShortenerForm({ initialValues, onSubmit }: Props) {
     >
       {(formik) => (
         <Form>
-          <SimpleGrid columns={{ md: 3 }} rowGap={3} mb={3}>
+          <SimpleGrid columns={{ md: 3 }} rowGap={3} marginBottom={3}>
             <GridItem colSpan={{ md: 2 }}>
               <FormInput label="URL" name="longUrl" type="text" placeholder="https://github.com/ifonny" />
             </GridItem>
@@ -80,7 +58,7 @@ export function UrlShortenerForm({ initialValues, onSubmit }: Props) {
             </GridItem>
           </SimpleGrid>
 
-          <SimpleGrid columns={{ sm: 1, md: 3 }} rowGap={3} alignItems="center" mb={3}>
+          <SimpleGrid columns={{ sm: 1, md: 3 }} rowGap={3} alignItems="center" marginBottom={3}>
             <GridItem colSpan={2}>
               <FormInput name="name" type="text" placeholder="Name" />
             </GridItem>

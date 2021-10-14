@@ -1,20 +1,12 @@
 import { AlertDescription, AlertIcon, Box, Alert } from '@chakra-ui/react';
-import { AxiosError, AxiosResponse } from 'axios';
+import { CreateUrlDTO } from 'api/urls';
+import { useCreateUrl } from 'api/urls/hooks';
 import { getSession } from 'next-auth/react';
-import { useMutation } from 'react-query';
-import api from 'src/utils/api';
-import { Url } from 'url';
-import UrlShortenerForm, { CreateUrlDTO } from './form';
-
-// TODO: Move dans un fichier pour les mutations ect (faire une zone pour l'api...?)
-const createUrl = async (newUrl: CreateUrlDTO) => {
-  return await api.post('/u', newUrl);
-};
+import UrlShortenerForm from './components/form';
+import UrlDetails from './components/url-details';
 
 const PageUrlShortener = () => {
-  const { mutateAsync, isSuccess, isError, data, error } = useMutation<AxiosResponse<Url>, AxiosError, CreateUrlDTO>(
-    createUrl,
-  );
+  const { mutateAsync, isSuccess, isError, data, error } = useCreateUrl();
 
   const handleSubmit = async (payload: CreateUrlDTO) => {
     await mutateAsync(payload);
@@ -31,11 +23,7 @@ const PageUrlShortener = () => {
         </Box>
       )}
 
-      {isSuccess ? (
-        <div>gg url cree (show url view ici) {JSON.stringify(data.data)}</div>
-      ) : (
-        <UrlShortenerForm onSubmit={handleSubmit} />
-      )}
+      {isSuccess ? <UrlDetails url={data.data} /> : <UrlShortenerForm onSubmit={handleSubmit} />}
     </Box>
   );
 };
