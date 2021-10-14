@@ -1,5 +1,4 @@
 import { Alert, AlertIcon, AlertTitle, AlertDescription, Flex } from '@chakra-ui/react';
-import Link from 'next/link';
 import React from 'react';
 
 export default function Page404() {
