@@ -32,6 +32,7 @@ const Home = () => {
   );
 };
 
+// Auth
 Home.auth = true;
 export const getServerSideProps = async (ctx) => ({ props: { session: await getSession(ctx) } });
 

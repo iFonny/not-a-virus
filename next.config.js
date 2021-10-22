@@ -12,12 +12,12 @@ const localeSubpaths = {
 };
 
 const config = {
-  devServer: {
-    proxy: {
-      '/api': 'http://localhost:3000',
-    },
-  },
-  rewrites: async () => nextI18NextRewrites(localeSubpaths),
+  rewrites: async () => [
+    ...nextI18NextRewrites(localeSubpaths),
+    { source: '/:path*', destination: '/:path*' },
+    { source: '/api/:path*', destination: `${process.env.NEXT_PUBLIC_API_ORIGIN_URL}/:path*` },
+    { source: '/u/:path*', destination: `${process.env.NEXT_PUBLIC_API_ORIGIN_URL}/u/:path*` },
+  ],
   publicRuntimeConfig: {
     localeSubpaths,
   },
