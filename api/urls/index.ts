@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import api from 'src/utils/api';
 
 // -------- Types
@@ -24,8 +25,8 @@ export interface CreateUrlDTO {
 
 // -------- Methods
 
-export const getUrl = async (urlId: number) => {
-  return await api.get(`/u/id/${urlId}`);
+export const getUrlById = async (urlId: number | string): Promise<Url> => {
+  return await api.get(`/u/id/${urlId}`).then((response) => response.data);
 };
 
 export const getAllUrls = async () => {
