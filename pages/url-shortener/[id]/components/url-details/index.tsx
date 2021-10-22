@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/button';
 import { useClipboard } from '@chakra-ui/hooks';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { Box, Container, Flex, Heading, Link, Spacer, Text } from '@chakra-ui/layout';
-import { StatGroup, Stat, StatLabel, StatNumber, Badge } from '@chakra-ui/react';
+import { StatGroup, Stat, StatLabel, StatNumber, Badge, useColorModeValue } from '@chakra-ui/react';
 import InputReadOnlyClipboard from '@components/form/input-readonly-clipboard';
 import { Url } from 'api/urls';
 import { format, parseISO } from 'date-fns';
@@ -19,7 +19,7 @@ export function UrlDetails({ url }: Props) {
 
   return (
     <Container maxWidth="2xl" centerContent>
-      <Flex p="2" border="1px" borderRadius="12" borderColor="gray" width="full">
+      <Flex p="2" border="1px" borderRadius="12" borderColor={useColorModeValue('gray.300', 'gray.600')} width="full">
         <Box p="2">
           <Link href={value} color="teal.500" isExternal>
             {urlWithoutHttp} <ExternalLinkIcon mx="2px" />
@@ -33,7 +33,14 @@ export function UrlDetails({ url }: Props) {
         </Box>
       </Flex>
 
-      <Box mt="4" p="5" border="1px" borderRadius="12" borderColor="gray" width="full">
+      <Box
+        mt="4"
+        p="5"
+        border="1px"
+        borderRadius="12"
+        borderColor={useColorModeValue('gray.300', 'gray.600')}
+        width="full"
+      >
         <Heading size="lg" mb="4" textTransform="capitalize" textAlign="left">
           {url.name}
         </Heading>
