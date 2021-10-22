@@ -15,8 +15,6 @@ export function PageUrl() {
     <Box textAlign="center" mt={3}>
       <Heading mb={4}>URL Details</Heading>
 
-      {isLoading && <Spinner />}
-
       {isError && (
         <Box marginY={4}>
           <Alert status="error" borderRadius={4}>
@@ -25,6 +23,8 @@ export function PageUrl() {
           </Alert>
         </Box>
       )}
+
+      {isLoading && <Spinner />}
 
       {isSuccess && <UrlDetails url={data} />}
     </Box>
