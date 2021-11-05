@@ -4,6 +4,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient, RoleEnum } from '@prisma/client';
 
 import DiscordProvider from 'next-auth/providers/discord';
+import { generageDefaultApiKey } from 'api/users';
 
 let prisma: PrismaClient;
 
@@ -38,7 +39,6 @@ export default NextAuth({
 
   callbacks: {
     async jwt({ token, user, account }) {
-      console.log('je viens ici ?', user);
       if (user?.id) token.id = user.id;
       if (user?.role) token.role = user.role;
       if (user?.apiKey) token.apiKey = user.apiKey;
@@ -46,14 +46,17 @@ export default NextAuth({
       return token;
     },
     async session({ session, token, user }) {
-      console.log('user', user);
-      console.log('token', token);
-      console.log('session', session);
       if (user?.id) session.user.id = user.id;
       if (user?.role) session.user.role = user.role;
       if (user?.apiKey) session.user.apiKey = user.apiKey;
 
       return session;
+    },
+  },
+
+  events: {
+    async signIn({ user }) {
+      if (user?.id && !user?.apiKey) await generageDefaultApiKey(user.id).catch(() => {});
     },
   },
 

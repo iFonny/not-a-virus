@@ -4,6 +4,7 @@ import { useGetUrl } from 'api/urls/hooks';
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import UrlDetails from './components/url-details';
+import { RoleEnum } from '@prisma/client';
 
 export function PageUrl() {
   const router = useRouter();
@@ -33,6 +34,7 @@ export function PageUrl() {
 
 // Auth
 PageUrl.auth = true;
+PageUrl.authRoles = [RoleEnum.USER, RoleEnum.ADMIN];
 export const getServerSideProps = async (ctx) => ({ props: { session: await getSession(ctx) } });
 
 export default PageUrl;

@@ -5,7 +5,11 @@ import { Box, Container, Flex, Heading, Link, Spacer, Text } from '@chakra-ui/la
 import { StatGroup, Stat, StatLabel, StatNumber, Badge, useColorModeValue } from '@chakra-ui/react';
 import InputReadOnlyClipboard from '@components/form/input-readonly-clipboard';
 import { Url } from 'api/urls';
+import { useDeleteUrl } from 'api/urls/hooks';
 import { format, parseISO } from 'date-fns';
+import { useRouter } from 'next/router';
+import { ButtonDelete } from 'src/components-ui /button/delete';
+import routes from 'src/constants/routes';
 
 interface Props {
   url: Url;
@@ -15,7 +19,15 @@ export function UrlDetails({ url }: Props) {
   const urlWithoutHttp = `${process.env.NEXT_PUBLIC_BASE_HOST}/u/${url.urlCode}`; // to handle custom domains in the future?
   const fullUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/u/${url.urlCode}`;
 
+  const router = useRouter();
   const { value, hasCopied, onCopy } = useClipboard(fullUrl);
+  const { mutateAsync: mutateDeleteUrl } = useDeleteUrl();
+
+  const handleDeleteUrl = async (urlId: string | number) => {
+    await mutateDeleteUrl(urlId)
+      .then(() => router.push(routes.urls.list))
+      .catch(() => {}); // Error toast already handled in _app.tsx
+  };
 
   return (
     <Container maxWidth="2xl" centerContent>
@@ -41,9 +53,17 @@ export function UrlDetails({ url }: Props) {
         borderColor={useColorModeValue('gray.300', 'gray.600')}
         width="full"
       >
-        <Heading size="lg" mb="4" textTransform="capitalize" textAlign="left">
-          {url.name}
-        </Heading>
+        <Flex mb="4">
+          <Heading size="lg" textTransform="capitalize" textAlign="left">
+            {url.name}
+          </Heading>
+          <Spacer />
+          <ButtonDelete
+            type="icon"
+            popoverBody="Are you sure you want to delete this url?"
+            onDelete={() => handleDeleteUrl(url.id)}
+          />
+        </Flex>
 
         <InputReadOnlyClipboard value={url.longUrl} />
 

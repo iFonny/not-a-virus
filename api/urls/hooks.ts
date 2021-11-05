@@ -24,9 +24,9 @@ export const useCreateUrl = () => {
 export const useDeleteUrl = () => {
   const queryClient = useQueryClient();
   return useMutation<AxiosResponse<Url>, AxiosError, number | string>(deleteUrl, {
-    onSuccess: (_, variables) => {
+    onSuccess: (_, urlId) => {
       queryClient.invalidateQueries(serverStateKeys.urls);
-      queryClient.invalidateQueries(serverStateKeys.url(variables));
+      queryClient.invalidateQueries(serverStateKeys.url(urlId));
     },
   });
 };

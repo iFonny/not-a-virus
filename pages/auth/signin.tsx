@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/button';
 import Icon from '@chakra-ui/icon';
 import { Box } from '@chakra-ui/layout';
 import { BuiltInProviderType } from 'next-auth/providers';
-import { ClientSafeProvider, getProviders, getSession, LiteralUnion, signIn, useSession } from 'next-auth/react';
+import { ClientSafeProvider, getProviders, getSession, LiteralUnion, signIn } from 'next-auth/react';
 import { SiDiscord } from 'react-icons/si';
 
 interface Props {

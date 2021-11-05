@@ -1,4 +1,5 @@
 import { AlertDescription, AlertIcon, Box, Alert, Heading } from '@chakra-ui/react';
+import { RoleEnum } from '@prisma/client';
 import { CreateUrlDTO } from 'api/urls';
 import { useCreateUrl } from 'api/urls/hooks';
 import { getSession } from 'next-auth/react';
@@ -35,6 +36,7 @@ const PageUrlShortener = () => {
 };
 
 PageUrlShortener.auth = true;
+PageUrlShortener.authRoles = [RoleEnum.USER, RoleEnum.ADMIN];
 export const getServerSideProps = async (ctx) => ({ props: { session: await getSession(ctx) } });
 
 export default PageUrlShortener;
