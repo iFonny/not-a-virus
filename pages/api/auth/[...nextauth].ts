@@ -55,8 +55,14 @@ export default NextAuth({
   },
 
   events: {
-    async signIn({ user }) {
-      if (user?.id && !user?.apiKey) await generageDefaultApiKey(user.id).catch(() => {});
+    async signIn({ user, profile }) {
+      if (user?.id) {
+        if (!user?.apiKey) await generageDefaultApiKey(user.id).catch(() => {});
+
+        // Update profile picture
+        if (profile?.image != user.image)
+          await prisma.user.update({ where: { id: user.id }, data: { image: profile.image } });
+      }
     },
   },
 

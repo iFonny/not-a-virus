@@ -1,15 +1,16 @@
-FROM node:12-alpine
+FROM node:16.13.2 
 
-WORKDIR /opt/app
+WORKDIR /app
 
-ENV NODE_ENV production
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY ["package.json", "yarn.lock", "./"]
+COPY prisma ./prisma/
 
-COPY package*.json ./
+# Install app dependencies
+RUN yarn install --pure-lockfile
 
-RUN npm ci 
+COPY . .
 
-COPY . /opt/app
+RUN yarn build
 
-RUN npm install --dev && npm run build
-
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]
