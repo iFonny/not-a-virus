@@ -8,20 +8,7 @@ services:
     image: kaenfr/not-a-virus-app:latest
     ports:
       - 4100:3000
-    depends_on:
-      - postgres-notavirus
     restart: 'unless-stopped'
-    networks:
-      - not-a-virus-net
-
-  postgres-notavirus:
-    image: 'postgres:14.1'
-    container_name: 'postgres-notavirus'
-    restart: 'unless-stopped'
-    ports:
-      - 5432:5432
-    volumes:
-      - /root/docker/postgres_data:/var/lib/postgresql/data
     networks:
       - not-a-virus-net
 
