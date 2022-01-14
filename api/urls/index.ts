@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import api from 'src/utils/api';
 
 // -------- Types
@@ -14,6 +15,10 @@ export interface Url {
   createdAt: string;
 }
 
+export interface Urls {
+  urls: Url[];
+}
+
 export interface CreateUrlDTO {
   longUrl: string;
   name: string;
@@ -24,14 +29,18 @@ export interface CreateUrlDTO {
 
 // -------- Methods
 
-export const getUrl = async (urlId: number) => {
-  return await api.get(`/u/id/${urlId}`);
+export const getUrlById = async (urlId: number | string): Promise<Url> => {
+  return await api.get(`/u/id/${urlId}`).then((response) => response?.data);
 };
 
-export const getAllUrls = async () => {
-  return await api.get(`/u/all`);
+export const getAllUrls = async (): Promise<Urls> => {
+  return await api.get(`/u/all`).then((response) => response?.data);
 };
 
 export const createUrl = async (newUrl: CreateUrlDTO) => {
   return await api.post('/u', newUrl);
+};
+
+export const deleteUrl = async (urlId: number | string) => {
+  return await api.delete(`/u/id/${urlId}`);
 };

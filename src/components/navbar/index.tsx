@@ -31,35 +31,33 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import React from 'react';
 import { Logo } from '../../components-ui /logo';
 import ThemeToggler from 'src/components-ui /theme-toggler';
+import { RoleEnum } from '.prisma/client';
 
 interface NavItem {
   label: string;
   subLabel?: string;
   children?: Array<NavItem>;
   href?: string;
+  authRoles?: RoleEnum[];
 }
 
 const NAV_ITEMS: Array<NavItem> = [
   { label: 'Home', href: '/' },
-  { label: 'Url Shortener', href: '/url-shortener' },
-  { label: 'Urls', href: '/urls' },
-  { label: 'Page With Auth', href: '/page-with-auth' },
-  { label: 'Page Without Auth', href: '/page-without-auth' },
+  { label: 'Url Shortener', href: '/url-shortener', authRoles: [RoleEnum.USER, RoleEnum.ADMIN] },
+  { label: 'My Urls', href: '/urls', authRoles: [RoleEnum.USER, RoleEnum.ADMIN] },
 ];
 
-const LogoutButton = () => {
-  const { data: session, status } = useSession();
-
+const LogoutButton = ({ sessionUser, status }) => {
   if (status === 'loading') return <Spinner />;
 
-  if (status === 'authenticated' && session?.user)
+  if (status === 'authenticated' && sessionUser)
     return (
       <Menu>
         <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
-          <Avatar size={'sm'} src={session.user.image} />
+          <Avatar size={'sm'} src={sessionUser.image} />
         </MenuButton>
         <MenuList>
-          <MenuGroup title={session.user.name}>
+          <MenuGroup title={sessionUser.name}>
             <MenuDivider />
             <MenuItem onClick={async () => await signOut()}>Logout</MenuItem>
           </MenuGroup>
@@ -72,6 +70,9 @@ const LogoutButton = () => {
 
 export const NavBar = () => {
   const { isOpen, onToggle } = useDisclosure();
+  const { data: session, status } = useSession();
+
+  const navigationItems = NAV_ITEMS.filter(({ authRoles }) => !authRoles || authRoles.includes(session?.user?.role));
 
   return (
     <Box>
@@ -97,28 +98,28 @@ export const NavBar = () => {
           <Logo />
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
+            <DesktopNav navigationItems={navigationItems} />
           </Flex>
         </Flex>
 
         <Stack flex={{ base: 1, md: 0 }} justify={'flex-end'} direction={'row'} spacing={6} align="center">
           <ThemeToggler />
 
-          <LogoutButton />
+          <LogoutButton sessionUser={session?.user} status={status} />
         </Stack>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
+        <MobileNav navigationItems={navigationItems} />
       </Collapse>
     </Box>
   );
 };
 
-const DesktopNav = () => {
+const DesktopNav = ({ navigationItems }) => {
   return (
     <Stack direction={'row'} align="center" spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
+      {navigationItems.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={'hover'} placement={'bottom-start'}>
             {/* <PopoverTrigger> */}
@@ -195,10 +196,10 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   );
 };
 
-const MobileNav = () => {
+const MobileNav = ({ navigationItems }) => {
   return (
     <Stack bg={useColorModeValue('white', 'gray.800')} p={4} display={{ md: 'none' }}>
-      {NAV_ITEMS.map((navItem) => (
+      {navigationItems.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
     </Stack>
