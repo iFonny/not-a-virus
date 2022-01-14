@@ -12,7 +12,7 @@
     "build:analyze": "ANALYZE=true npm run build",
     "lint": "next lint",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'",
-    "test": "jest -c test/jest.config.js",
+    "test": "jest -c test/jest.config.js --env=jsdom",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -85,5 +85,8 @@
     "*.{js,jsx,ts,tsx}": [
       "yarn run lint -- --quiet --fix"
     ]
+  },
+  "volta": {
+    "node": "16.13.2"
   }
 }
