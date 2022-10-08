@@ -3,12 +3,13 @@ import { AppProps } from 'next/app';
 import { ChakraProvider, useToast } from '@chakra-ui/react';
 import theme from '@definitions/chakra/theme';
 import '@styles/global.scss';
-import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from 'react-query';
+import { DehydratedState, MutationCache, QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { Hydrate } from 'react-query/hydration';
 import { Provider } from 'react-redux';
 import store from '@redux/store';
 import { appWithTranslation } from '@i18n';
 import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
 import { NextPage } from 'next';
 import Auth from 'src/layouts/Auth';
 import Layout from 'src/layouts/Layout';
@@ -56,7 +57,7 @@ function AppQueryAndLayout({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
+      <Hydrate state={(pageProps as { dehydratedState?: DehydratedState })?.dehydratedState}>
         <Provider store={store}>
           <Layout>
             {Component.auth ? (
@@ -72,7 +73,7 @@ function AppQueryAndLayout({ Component, pageProps }: AppPropsWithLayout) {
   );
 }
 
-function MyApp(props: AppPropsWithLayout): JSX.Element {
+function MyApp(props: AppProps<{ session: Session }>): JSX.Element {
   return (
     <SessionProvider session={props.pageProps.session}>
       <ChakraProvider theme={theme}>
