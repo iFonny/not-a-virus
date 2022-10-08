@@ -21,6 +21,9 @@ const config = {
   publicRuntimeConfig: {
     localeSubpaths,
   },
+  experimental: {
+    forceSwcTransforms: true,
+  },
 };
 
-module.exports = withPlugins([[withBundleAnalyzer]], config);
+module.exports = async (phase) => withPlugins([[withBundleAnalyzer]], config)(phase, { undefined });
