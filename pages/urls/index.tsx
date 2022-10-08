@@ -1,7 +1,7 @@
-import { AlertDescription, AlertIcon, Box, Alert, Heading, Link, Spinner, useToast } from '@chakra-ui/react';
+import { AlertDescription, AlertIcon, Box, Alert, Heading, Link, Spinner } from '@chakra-ui/react';
 import { Url } from 'api/urls';
 import { useDeleteUrl, useGetAllUrls } from 'api/urls/hooks';
-import { getSession } from 'next-auth/react';
+import { getSession, GetSessionParams } from 'next-auth/react';
 import routes from 'src/constants/routes';
 import { useTable, useGlobalFilter, useSortBy } from 'react-table';
 import React, { useState, useMemo, useEffect } from 'react';
@@ -110,6 +110,6 @@ const PageUrls = () => {
 
 PageUrls.auth = true;
 PageUrls.authRoles = [RoleEnum.USER, RoleEnum.ADMIN];
-export const getServerSideProps = async (ctx) => ({ props: { session: await getSession(ctx) } });
+export const getServerSideProps = async (ctx: GetSessionParams) => ({ props: { session: await getSession(ctx) } });
 
 export default PageUrls;

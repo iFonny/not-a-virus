@@ -21,7 +21,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 const UserInfo = () => {
   const [show, setShow] = useBoolean();
-  let { data: session, status } = useSession();
+  const { data: session, status } = useSession();
   const { hasCopied, onCopy, value } = useClipboard(session?.user?.apiKey);
 
   if (status === 'loading') return <Spinner />;

@@ -1,14 +1,14 @@
 import { Table, Thead, Tr, Th, Tbody, Td, Input, InputLeftElement, InputGroup } from '@chakra-ui/react';
 import { useAsyncDebounce } from 'react-table';
 import React, { useState } from 'react';
-import { Search2Icon, SearchIcon } from '@chakra-ui/icons';
+import { Search2Icon } from '@chakra-ui/icons';
 
 const TWO_HUNDRED_MS = 200;
 
 function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
   const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
-  const onChange = useAsyncDebounce((value: any) => {
+  const onChange = useAsyncDebounce((value) => {
     setGlobalFilter(value || undefined);
   }, TWO_HUNDRED_MS);
 
