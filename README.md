@@ -157,3 +157,34 @@ GitHub Actions makes it easy to automate all your software workflows, now with w
 ## License
 
 MIT
+
+# Production deployment
+
+- /!\ Deploy the api first (because the postgres container is not in the docker-compose file)
+
+- Clone on the production server
+- Add `.env.production.local` file with secrets
+
+/!\ To build on local machine you need to be on the same architecture (you can't run x86 built image on an arm64/aarch64 machine)
+
+To launch after the
+
+## On local machine (build and push)
+
+```bash
+# Build image
+$ docker-compose build
+
+# Push image to docker hub
+$ docker-compose push
+```
+
+## On the server (pull and run)
+
+```bash
+# Pull image from docker hub
+$ docker-compose pull
+
+# Bem ca run
+$ docker-compose -p "not-a-virus-app" up -d
+```
