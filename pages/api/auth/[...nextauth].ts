@@ -1,7 +1,6 @@
 import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { PrismaClient, RoleEnum } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 import DiscordProvider from 'next-auth/providers/discord';
 import { generageDefaultApiKey } from 'api/users';
