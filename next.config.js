@@ -13,6 +13,23 @@ const localeSubpaths = {
 };
 
 const config = {
+  async redirects() {
+    return [
+      {
+        // source: '/((?!api|u).*)/:slug',
+        source: '/:path((?!api|u).*)*',
+        has: [
+          {
+            type: 'header',
+            key: 'host',
+            value: '(.*)(en-f.eu|gouv.fr)(.*)',
+          },
+        ],
+        destination: `${process.env.NEXT_PUBLIC_BASE_URL}/:path*`,
+        permanent: false,
+      },
+    ];
+  },
   rewrites: async () => [
     ...nextI18NextRewrites(localeSubpaths),
     { source: '/:path*', destination: '/:path*' },
