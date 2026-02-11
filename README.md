@@ -165,10 +165,6 @@ MIT
 - Clone on the production server
 - Add `.env.production.local` file with secrets
 
-/!\ To build on local machine you need to be on the same architecture (you can't run x86 built image on an arm64/aarch64 machine)
-
-To launch after the
-
 ## On local machine (build and push)
 
 ```bash

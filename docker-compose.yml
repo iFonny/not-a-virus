@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   not-a-virus-app:
+    platform: linux/amd64
     container_name: 'not-a-virus-app'
     build:
       context: .
