@@ -13,6 +13,7 @@
     "lint": "next lint",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'",
     "test": "jest -c test/jest.config.js --env=jsdom",
+    "preinstall": "npx only-allow pnpm",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -83,11 +84,11 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "yarn run lint -- --quiet --fix"
+      "pnpm run lint -- --quiet --fix"
     ]
   },
   "volta": {
-    "node": "16.20.2",
-    "yarn": "1.22.22"
-  }
+    "node": "16.20.2"
+  },
+  "packageManager": "pnpm@10.29.3+sha512.498e1fb4cca5aa06c1dcf2611e6fafc50972ffe7189998c409e90de74566444298ffe43e6cd2acdc775ba1aa7cc5e092a8b7054c811ba8c5770f84693d33d2dc"
 }

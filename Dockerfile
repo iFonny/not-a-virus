@@ -1,16 +1,16 @@
-FROM node:16.13.2 
+FROM node:16.20.2 
 
 WORKDIR /app
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY ["package.json", "yarn.lock", "./"]
+COPY ["package.json", "pnpm-lock.yaml", "./"]
 COPY prisma ./prisma/
 
 # Install app dependencies
-RUN yarn install --pure-lockfile
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-RUN yarn build
+RUN pnpm build
 
-CMD [ "yarn", "start" ]
+CMD [ "pnpm", "start" ]
