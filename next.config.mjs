@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const withPlugins = require('next-compose-plugins');
+import bundleAnalyzer from '@next/bundle-analyzer';
+import withPlugins from 'next-compose-plugins';
+import { nextI18NextRewrites } from 'next-i18next/rewrites.js';
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
-
-const { nextI18NextRewrites } = require('next-i18next/rewrites');
 
 const localeSubpaths = {
   tr: 'tr',
@@ -33,8 +32,14 @@ const config = {
   rewrites: async () => [
     ...nextI18NextRewrites(localeSubpaths),
     { source: '/:path*', destination: '/:path*' },
-    { source: '/api/:path*', destination: `${process.env.NEXT_PUBLIC_API_ORIGIN_URL}/:path*` },
-    { source: '/u/:path*', destination: `${process.env.NEXT_PUBLIC_API_ORIGIN_URL}/u/:path*` },
+    {
+      source: '/api/:path*',
+      destination: `${process.env.NEXT_PUBLIC_API_ORIGIN_URL}/:path*`,
+    },
+    {
+      source: '/u/:path*',
+      destination: `${process.env.NEXT_PUBLIC_API_ORIGIN_URL}/u/:path*`,
+    },
   ],
   publicRuntimeConfig: {
     localeSubpaths,
@@ -42,6 +47,12 @@ const config = {
   experimental: {
     forceSwcTransforms: true,
   },
+		// eslint: {
+  //   ignoreDuringBuilds: true,
+  // },
+  // typescript: {
+  //   ignoreBuildErrors: true,
+  // },
 };
 
-module.exports = async (phase) => withPlugins([[withBundleAnalyzer]], config)(phase, { undefined });
+export default async (phase) => withPlugins([[withBundleAnalyzer]], config)(phase, { undefined });
