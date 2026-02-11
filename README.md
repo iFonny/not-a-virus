@@ -15,31 +15,31 @@ Every plugin comes with an example to give you a brief knowledge about their usa
 ### Running the development server.
 
 ```bash
-    yarn dev
+    pnpm dev
 ```
 
 ### Building for production.
 
 ```bash
-    yarn build
+    pnpm build
 ```
 
 ### Running the production server.
 
 ```bash
-    yarn start
+    pnpm start
 ```
 
 ### Linting & formatting your code.
 
 ```bash
-    yarn lint
+    pnpm lint
 ```
 
 ### Running your tests.
 
 ```bash
-    yarn test
+    pnpm test
 ```
 
 ## Learn More
