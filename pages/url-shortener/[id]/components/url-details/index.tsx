@@ -1,5 +1,6 @@
 import { Box, Container, Flex, Heading, Spacer, Text, VStack } from '@chakra-ui/layout';
-import { StatGroup, Stat, StatLabel, StatNumber, Badge, useColorModeValue } from '@chakra-ui/react';
+import { useColorModeValue } from "../../../../../src/components/ui/color-mode";
+import { Steps, Stat, Badge } from '@chakra-ui/react';
 import InputReadOnlyClipboard from '@components/form/input-readonly-clipboard';
 import { Url } from 'api/urls';
 import { useDeleteUrl } from 'api/urls/hooks';
@@ -41,7 +42,6 @@ export function UrlDetails({ url }: Props) {
           </>
         )}
       </VStack>
-
       <Box
         mt="4"
         p="5"
@@ -66,19 +66,19 @@ export function UrlDetails({ url }: Props) {
 
         {url.description && <Text mt="4">{url.description}</Text>}
 
-        <StatGroup mt="4">
-          <Stat>
-            <StatLabel>Created at</StatLabel>
-            <StatNumber>
+        <Stat.Root mt="4">
+          <Stat.Root>
+            <Stat.Label>Created at</Stat.Label>
+            <Stat.ValueText>
               <Badge>{format(parseISO(url.createdAt), 'Pp')}</Badge>
-            </StatNumber>
-          </Stat>
+            </Stat.ValueText>
+          </Stat.Root>
 
-          <Stat>
-            <StatLabel>Clicked</StatLabel>
-            <StatNumber>{url.clickCount}</StatNumber>
-          </Stat>
-        </StatGroup>
+          <Stat.Root>
+            <Stat.Label>Clicked</Stat.Label>
+            <Stat.ValueText>{url.clickCount}</Stat.ValueText>
+          </Stat.Root>
+        </Stat.Root>
       </Box>
     </Container>
   );

@@ -1,10 +1,10 @@
-import { Alert, AlertIcon, AlertTitle, AlertDescription, Flex } from '@chakra-ui/react';
+import { Steps, Alert, Flex } from '@chakra-ui/react';
 import React from 'react';
 
 export default function Page404() {
   return (
     <Flex h="fullvh" w="100wv" justify="center" align="center">
-      <Alert
+      <Alert.Root
         status="warning"
         variant="subtle"
         flexDirection="column"
@@ -13,12 +13,12 @@ export default function Page404() {
         textAlign="center"
         height="100%"
       >
-        <AlertIcon boxSize="40px" mr={0} />
-        <AlertTitle mt={4} mb={1} mx={0} fontSize="lg">
+        <Alert.Indicator boxSize="40px" mr={0} />
+        <Alert.Title mt={4} mb={1} mx={0} fontSize="lg">
           404
-        </AlertTitle>
-        <AlertDescription maxWidth="sm">Page not found</AlertDescription>
-      </Alert>
+        </Alert.Title>
+        <Alert.Description maxWidth="sm">Page not found</Alert.Description>
+      </Alert.Root>
     </Flex>
   );
 }

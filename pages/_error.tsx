@@ -1,10 +1,10 @@
-import { Alert, AlertIcon, AlertTitle, AlertDescription, Flex } from '@chakra-ui/react';
+import { Steps, Alert, Flex } from '@chakra-ui/react';
 import React from 'react';
 
 function Error({ statusCode }) {
   return (
     <Flex h="fullvh" w="100wv" justify="center" align="center">
-      <Alert
+      <Alert.Root
         status="error"
         variant="subtle"
         flexDirection="column"
@@ -13,14 +13,14 @@ function Error({ statusCode }) {
         textAlign="center"
         height="100%"
       >
-        <AlertIcon boxSize="40px" mr={0} />
-        <AlertTitle mt={4} mb={1} mx={0} fontSize="lg">
+        <Alert.Indicator boxSize="40px" mr={0} />
+        <Alert.Title mt={4} mb={1} mx={0} fontSize="lg">
           {statusCode || 'Error'}
-        </AlertTitle>
-        <AlertDescription maxWidth="sm">
+        </Alert.Title>
+        <Alert.Description maxWidth="sm">
           {statusCode ? `An error ${statusCode} occurred on server` : 'An error occurred on client'}
-        </AlertDescription>
-      </Alert>
+        </Alert.Description>
+      </Alert.Root>
     </Flex>
   );
 }

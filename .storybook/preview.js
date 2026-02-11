@@ -1,6 +1,6 @@
 import { addDecorator } from "@storybook/react";
 
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { Steps, ChakraProvider, createSystem, defaultConfig } from "@chakra-ui/react";
 
 export const parameters = {
     actions: { argTypesRegex: "^on[A-Z].*" },
@@ -22,7 +22,9 @@ const withChakra = (StoryFn, context) => {
     const { direction } = context.globals;
     const dir = direction.toLowerCase();
     return (
-        <ChakraProvider theme={extendTheme({ direction: dir })}>
+        <ChakraProvider value={String(createSystem(defaultConfig, {
+            direction: dir,
+        }))}>
             <div dir={dir} id="story-wrapper" style={{ minHeight: "100vh" }}>
                 <StoryFn />
             </div>

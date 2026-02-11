@@ -1,18 +1,6 @@
-import { DeleteIcon } from '@chakra-ui/icons';
-import {
-  Popover,
-  PopoverTrigger,
-  IconButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverBody,
-  PopoverFooter,
-  ButtonGroup,
-  Button,
-} from '@chakra-ui/react';
+import { Steps, Popover, IconButton, ButtonGroup, Button } from '@chakra-ui/react';
 import { ReactNode } from 'react';
+import { LuTrash2 } from 'react-icons/lu';
 
 interface Props {
   type: 'icon' | 'text';
@@ -23,32 +11,34 @@ interface Props {
 
 export const ButtonDelete = ({ type, popoverBody = 'Are you sure?', onDelete, onCancel }: Props) => {
   return (
-    <Popover>
-      <PopoverTrigger>
+    <Popover.Root>
+      <Popover.Trigger asChild>
         {type === 'icon' ? (
-          <IconButton colorScheme="red" aria-label="Delete" icon={<DeleteIcon />} />
+          <IconButton colorPalette="red" aria-label="Delete"><LuTrash2 /></IconButton>
         ) : (
-          <Button colorScheme="red" aria-label="Delete">
+          <Button colorPalette="red" aria-label="Delete">
             Delete
           </Button>
         )}
-      </PopoverTrigger>
-      <PopoverContent>
-        <PopoverHeader fontWeight="semibold">Confirmation</PopoverHeader>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverBody>{popoverBody}</PopoverBody>
-        <PopoverFooter d="flex" justifyContent="flex-end">
-          <ButtonGroup size="sm">
-            <Button onClick={onCancel} variant="outline">
-              Cancel
-            </Button>
-            <Button onClick={onDelete} colorScheme="red">
-              Delete
-            </Button>
-          </ButtonGroup>
-        </PopoverFooter>
-      </PopoverContent>
-    </Popover>
+      </Popover.Trigger>
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Title fontWeight="semibold">Confirmation</Popover.Title>
+          <Popover.Arrow />
+          <Popover.CloseTrigger />
+          <Popover.Body>{popoverBody}</Popover.Body>
+          <Popover.Footer d="flex" justifyContent="flex-end">
+            <ButtonGroup size="sm">
+              <Button onClick={onCancel} variant="outline">
+                Cancel
+              </Button>
+              <Button onClick={onDelete} colorPalette="red">
+                Delete
+              </Button>
+            </ButtonGroup>
+          </Popover.Footer>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
   );
 };

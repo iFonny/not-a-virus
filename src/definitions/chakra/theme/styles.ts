@@ -1,4 +1,4 @@
-import { ThemeOverride } from '@chakra-ui/react';
+import { Steps, ThemeOverride } from '@chakra-ui/react';
 
 type GlobalStyles = Pick<ThemeOverride, 'styles'>;
 

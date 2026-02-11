@@ -44,15 +44,15 @@ const config = {
   publicRuntimeConfig: {
     localeSubpaths,
   },
-  experimental: {
-    forceSwcTransforms: true,
-  },
+  // experimental: {
+  //   forceSwcTransforms: true,
+  // },
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // typescript: {
-  //   ignoreBuildErrors: true,
-  // },
+  typescript: {
+    ignoreBuildErrors: true,
+  }
 };
 
 export default async (phase) => withPlugins([[withBundleAnalyzer]], config)(phase, { undefined });

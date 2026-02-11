@@ -1,37 +1,40 @@
-import React, { useEffect, ReactNode } from 'react';
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import React, { type ReactNode, useEffect } from "react";
+import FullPageSpinner from "src/components-ui /full-page-spinner";
+import routes from "src/constants/routes";
 
-import { useSession } from 'next-auth/react';
-import FullPageSpinner from 'src/components-ui /full-page-spinner';
-import { useRouter } from 'next/router';
-import { RoleEnum } from '.prisma/client';
-import routes from 'src/constants/routes';
-
+type RoleEnum = {
+	GUEST: 'GUEST',
+	USER: 'USER',
+	ADMIN: 'ADMIN'
+};
 export type Props = {
-  children: ReactNode;
-  authRoles?: RoleEnum[];
+	children: ReactNode;
+	authRoles?: RoleEnum[];
 };
 
 /* NextAuth.js auth component from doc */
 const Auth = ({ children, authRoles }: Props) => {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+	const { data: session, status } = useSession();
+	const router = useRouter();
 
-  const isUser = !!session?.user;
-  const hasPermission = !authRoles || authRoles.includes(session?.user?.role);
+	const isUser = !!session?.user;
+	const hasPermission = !authRoles || authRoles.includes(session?.user?.role);
 
-  useEffect(() => {
-    if (status === 'loading') return; // Do nothing while loading
+	useEffect(() => {
+		if (status === "loading") return; // Do nothing while loading
 
-    // If not authenticated, redirect to sign in page
-    if (!isUser) router.push(routes.signin);
-    else if (!hasPermission) router.push(routes.notFound); // If not authorized, redirect to 404
-  }, [isUser, hasPermission, router, status]);
+		// If not authenticated, redirect to sign in page
+		if (!isUser) router.push(routes.signin);
+		else if (!hasPermission) router.push(routes.notFound); // If not authorized, redirect to 404
+	}, [isUser, hasPermission, router, status]);
 
-  if (isUser && hasPermission) return <>{children}</>;
+	if (isUser && hasPermission) return <>{children}</>;
 
-  // Session is being fetched, or no user.
-  // If no user, useEffect() will redirect.
-  return <FullPageSpinner />;
+	// Session is being fetched, or no user.
+	// If no user, useEffect() will redirect.
+	return <FullPageSpinner />;
 };
 
 /* const PrivateLayout = (props: LayoutProps) => {

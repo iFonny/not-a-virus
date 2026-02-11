@@ -1,6 +1,15 @@
+/*
+ MIGRATION NOTE: The following Chakra UI hooks have been removed.
+ Please replace them with the suggested alternatives:
+
+//   - useClipboard: Use react-use: useCopyToClipboard
+
+ See: https://chakra-ui.com/docs/get-started/migration#hooks
+*/
 import React from 'react';
-import { Box, Button, Flex, Link, Spacer, useClipboard, useColorModeValue } from '@chakra-ui/react';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { useColorModeValue } from "../../../../src/components/ui/color-mode";
+import { Steps, Box, Button, Flex, Link, Spacer, Icon } from '@chakra-ui/react';
+import { LuExternalLink } from 'react-icons/lu';
 
 interface Props {
   value: string;
@@ -13,8 +22,8 @@ function BoxClipboard({ value, label }: Props) {
   return (
     <Flex p="2" border="1px" borderRadius="12" borderColor={useColorModeValue('gray.300', 'gray.600')} width="full">
       <Box p="2">
-        <Link href={value} color="teal.500" isExternal>
-          {label} <ExternalLinkIcon mx="2px" />
+        <Link href={value} color="teal.500" target='_blank' rel='noopener noreferrer'>
+          {label} <Icon mx="2px" asChild><LuExternalLink /></Icon>
         </Link>
       </Box>
       <Spacer />

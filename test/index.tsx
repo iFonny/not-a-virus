@@ -5,7 +5,7 @@ import {
     RenderResult,
 } from "@testing-library/react";
 
-import { ChakraProvider } from "@chakra-ui/react";
+import { Steps, ChakraProvider } from "@chakra-ui/react";
 import theme from "@definitions/chakra/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
@@ -24,7 +24,7 @@ export const AllTheProviders = ({ children }) => {
 
     return (
         <>
-            <ChakraProvider theme={theme}>
+            <ChakraProvider value={String(system)}>
                 <QueryClientProvider client={queryClient}>
                     <Provider store={store}>{children}</Provider>
                 </QueryClientProvider>

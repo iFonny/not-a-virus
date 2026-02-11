@@ -1,6 +1,11 @@
 import { Session } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
-import { RoleEnum } from '@prisma/client';
+
+type RoleEnum = {
+	GUEST: 'GUEST',
+	USER: 'USER',
+	ADMIN: 'ADMIN'
+};
 
 declare module 'next-auth' {
   interface Session {

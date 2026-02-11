@@ -1,6 +1,14 @@
+/*
+ MIGRATION NOTE: The following Chakra UI hooks have been removed.
+ Please replace them with the suggested alternatives:
+
+//   - useClipboard: Use react-use: useCopyToClipboard
+
+ See: https://chakra-ui.com/docs/get-started/migration#hooks
+*/
 import React from 'react';
 import { Input } from '@chakra-ui/input';
-import { Button, InputGroup, InputRightElement, useClipboard } from '@chakra-ui/react';
+import { Steps, Button, InputGroup, InputRightElement } from '@chakra-ui/react';
 
 interface Props {
   value: string;
