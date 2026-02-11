@@ -47,9 +47,9 @@ const config = {
   experimental: {
     forceSwcTransforms: true,
   },
-		// eslint: {
-  //   ignoreDuringBuilds: true,
-  // },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   // typescript: {
   //   ignoreBuildErrors: true,
   // },

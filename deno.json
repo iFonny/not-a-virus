@@ -1,3 +1,4 @@
 {
-  "nodeModulesDir": "auto"
+  "nodeModulesDir": "auto",
+  "allowScripts": ["npm:@prisma/client@3.0.2", "npm:@prisma/engines@2.31.0-32.2452cc6313d52b8b9a96999ac0e974d0aedf88db", "npm:core-js-pure@3.48.0", "npm:core-js@3.48.0", "npm:fsevents@1.2.13", "npm:fsevents@2.3.3", "npm:prisma@3.0.2", "npm:unrs-resolver@1.11.1"]
 }
